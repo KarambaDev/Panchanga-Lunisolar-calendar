@@ -1,0 +1,6 @@
+User-agent: Yandex
+Host: 5anga.ru
+Disallow: /noindex/
+
+User-agent: *
+Disallow: /noindex/
