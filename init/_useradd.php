@@ -1,5 +1,5 @@
 <?php
-require_once(dirname(__FILE__) . '/configuration.php');
+require_once(dirname(__FILE__) . '/../noindex/configuration.php');
 $mysql_link = new mysqli($GLOBALS['mysql_server'], $GLOBALS['mysql_user'], $GLOBALS['mysql_password'], $GLOBALS['dbname']);
 if (mysqli_connect_errno()) {
     die("Connect failed: %s\n". mysqli_connect_error().'</br>');
@@ -16,7 +16,7 @@ else {
 /*
 INSERT INTO users VALUES (0, 'share');
 owner_id - 0 = default id
-name - имя 
+name - пїЅпїЅпїЅ 
 */
 		$mysql_link->query("INSERT INTO users VALUES (0, 'share');");
 		}

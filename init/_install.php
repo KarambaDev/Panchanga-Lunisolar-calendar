@@ -8,7 +8,7 @@
 //phpinfo();
 error_reporting(E_ALL);
 $start_time = microtime(true);
-require_once(dirname(__FILE__) . '/configuration.php');
+require_once(dirname(__FILE__) . '/../noindex/configuration.php');
 
 $mysql_link = new mysqli($mysql_server, $mysql_user, $mysql_password);
 if (mysqli_connect_errno()) {
@@ -22,7 +22,7 @@ else {
 	else {
 		echo "Database ".$dbname." was successfully created</br>";
 		$mysql_link->select_db($dbname);
-		if (!$mysql_link->query('CREATE TABLE tithi (date INT, paksha TINYINT, ntithi TINYINT, month TINYINT, year SMALLINT, a_masa TINYINT, p_masa TINYINT, leap TINYINT, a_Hyear SMALLINT, p_Hyear SMALLINT, PRIMARY KEY (date))'))
+		if (!$mysql_link->query('CREATE TABLE tithi (d INT, p TINYINT, n TINYINT, month TINYINT, year SMALLINT, am TINYINT, pm TINYINT, l TINYINT, ay SMALLINT, py SMALLINT, PRIMARY KEY (d))'))
 			{
 			die("Could not create table <b>tithi</b>: " . mysqli_connect_error(). '</br>');
 			}

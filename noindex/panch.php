@@ -57,7 +57,7 @@ if (isset($_GET['mt'])) {
 	if ($_GET['mt']==0) {	$initial->masa_type=0;	}
 	elseif ($_GET['mt']==1) {	$initial->masa_type=1;	}
 	}
-if (isset($_GET['test'])) {	$initial->test=TRUE;	}
+if (isset($_GET['test']) && $GLOBALS['test']) {	$initial->test=true;	}
 if (isset($error)) {
 	echo json_encode($error, JSON_FORCE_OBJECT);
 	}
@@ -66,46 +66,46 @@ else {
 	include_once(dirname(__FILE__) . '/panchfunc.php');
 	$panchf = new panchf($initial);
 if ($initial->test) {	print_r($panchf);	}
-		foreach ($panchf->tithi as $key=>$value) {
-			$panchf->tithi[$key]['d']=$value['d']+date('Z',$value['d']);
-			}
-		foreach ($panchf->days_arr as $key=>$value) {
-			if (isset($panchf->days_arr[$key]->sr[0])) {	foreach ($panchf->days_arr[$key]->sr as $k=>$v) {	$panchf->days_arr[$key]->sr[$k]=$v+date('Z',$v);	}}
-			if (isset($panchf->days_arr[$key]->ss[0])) {	foreach ($panchf->days_arr[$key]->ss as $k=>$v) {	$panchf->days_arr[$key]->ss[$k]=$v+date('Z',$v);	}}
-			if (isset($panchf->days_arr[$key]->mr[0])) {	foreach ($panchf->days_arr[$key]->mr as $k=>$v) {	$panchf->days_arr[$key]->mr[$k]=$v+date('Z',$v);	}}
-			if (isset($panchf->days_arr[$key]->ms[0])) {	foreach ($panchf->days_arr[$key]->ms as $k=>$v) {	$panchf->days_arr[$key]->ms[$k]=$v+date('Z',$v);	}}
-			if (isset($panchf->days_arr[$key]->na[0])) {	foreach ($panchf->days_arr[$key]->na as $k=>$v) {	if (isset($v['d'])) $panchf->days_arr[$key]->na[$k]['d']=$v['d']+date('Z',$v['d']);	}	}
-			//if (isset($panchf->days_arr[$key]->ti[0])) {	foreach ($panchf->days_arr[$key]->ti as $k=>$v) {	if (isset($v['d'])) $panchf->days_arr[$key]->ti[$k]['d']=$v['d']+date('Z',$v['d']);	}	}
-			if (isset($panchf->days_arr[$key]->se)) {
-				$v=$panchf->days_arr[$key]->se;
-				if (isset($v['max'])) $panchf->days_arr[$key]->se['max']=$v['max']+date('Z',$v['max']);
-				if (isset($v['p1'])) $panchf->days_arr[$key]->se['p1']=$v['p1']+date('Z',$v['p1']);
-				if (isset($v['p2'])) $panchf->days_arr[$key]->se['p2']=$v['p2']+date('Z',$v['p2']);
-				if (isset($v['t1'])) $panchf->days_arr[$key]->se['t1']=$v['t1']+date('Z',$v['t1']);
-				if (isset($v['t2'])) $panchf->days_arr[$key]->se['t2']=$v['t2']+date('Z',$v['t2']);
-				if (isset($v['max_l'])) $panchf->days_arr[$key]->se['max_l']=$v['max_l']+date('Z',$v['max_l']);
-				if (isset($v['p1l'])) $panchf->days_arr[$key]->se['p1l']=$v['p1l']+date('Z',$v['p1l']);
-				if (isset($v['p2l'])) $panchf->days_arr[$key]->se['p2l']=$v['p2l']+date('Z',$v['p2l']);
-				if (isset($v['t1l'])) $panchf->days_arr[$key]->se['t1l']=$v['t1l']+date('Z',$v['t1l']);
-				if (isset($v['t2l'])) $panchf->days_arr[$key]->se['t2l']=$v['t2l']+date('Z',$v['t2l']);
-				}
-			if (isset($panchf->days_arr[$key]->me)) {
-				$v=$panchf->days_arr[$key]->me;
-				if (isset($v['max'])) $panchf->days_arr[$key]->me['max']=$v['max']+date('Z',$v['max']);
-				if (isset($v['p1'])) $panchf->days_arr[$key]->me['p1']=$v['p1']+date('Z',$v['p1']);
-				if (isset($v['p2'])) $panchf->days_arr[$key]->me['p2']=$v['p2']+date('Z',$v['p2']);
-				if (isset($v['t1'])) $panchf->days_arr[$key]->me['t1']=$v['t1']+date('Z',$v['t1']);
-				if (isset($v['t2'])) $panchf->days_arr[$key]->me['t2']=$v['t2']+date('Z',$v['t2']);
-				if (isset($v['pu1'])) $panchf->days_arr[$key]->me['pu1']=$v['pu1']+date('Z',$v['pu1']);
-				if (isset($v['pu2'])) $panchf->days_arr[$key]->me['pu2']=$v['pu2']+date('Z',$v['pu2']);
-				if (isset($v['pul'][0])) $panchf->days_arr[$key]->me['pul'][0]=$v['pul'][0]+date('Z',$v['pul'][0]);
-				if (isset($v['pul'][1])) $panchf->days_arr[$key]->me['pul'][1]=$v['pul'][1]+date('Z',$v['pul'][1]);
-				if (isset($v['pl'][0])) $panchf->days_arr[$key]->me['pl'][0]=$v['pl'][0]+date('Z',$v['pl'][0]);
-				if (isset($v['pl'][1])) $panchf->days_arr[$key]->me['pl'][1]=$v['pl'][1]+date('Z',$v['pl'][1]);
-				if (isset($v['tl'][0])) $panchf->days_arr[$key]->me['tl'][0]=$v['tl'][0]+date('Z',$v['tl'][0]);
-				if (isset($v['tl'][1])) $panchf->days_arr[$key]->me['tl'][1]=$v['tl'][1]+date('Z',$v['tl'][1]);
-				}
-			}
+foreach ($panchf->tithi as $key=>$value) {
+	$panchf->tithi[$key]['d']=$value['d']+date('Z',$value['d']);
+	}
+foreach ($panchf->days_arr as $key=>$value) {
+	if (isset($panchf->days_arr[$key]->sr[0])) {	foreach ($panchf->days_arr[$key]->sr as $k=>$v) {	$panchf->days_arr[$key]->sr[$k]=$v+date('Z',$v);	}}
+	if (isset($panchf->days_arr[$key]->ss[0])) {	foreach ($panchf->days_arr[$key]->ss as $k=>$v) {	$panchf->days_arr[$key]->ss[$k]=$v+date('Z',$v);	}}
+	if (isset($panchf->days_arr[$key]->mr[0])) {	foreach ($panchf->days_arr[$key]->mr as $k=>$v) {	$panchf->days_arr[$key]->mr[$k]=$v+date('Z',$v);	}}
+	if (isset($panchf->days_arr[$key]->ms[0])) {	foreach ($panchf->days_arr[$key]->ms as $k=>$v) {	$panchf->days_arr[$key]->ms[$k]=$v+date('Z',$v);	}}
+	if (isset($panchf->days_arr[$key]->na[0])) {	foreach ($panchf->days_arr[$key]->na as $k=>$v) {	if (isset($v['d'])) $panchf->days_arr[$key]->na[$k]['d']=$v['d']+date('Z',$v['d']);	}	}
+	//if (isset($panchf->days_arr[$key]->ti[0])) {	foreach ($panchf->days_arr[$key]->ti as $k=>$v) {	if (isset($v['d'])) $panchf->days_arr[$key]->ti[$k]['d']=$v['d']+date('Z',$v['d']);	}	}
+	if (isset($panchf->days_arr[$key]->se)) {
+		$v=$panchf->days_arr[$key]->se;
+		if (isset($v['max'])) $panchf->days_arr[$key]->se['max']=$v['max']+date('Z',$v['max']);
+		if (isset($v['p1'])) $panchf->days_arr[$key]->se['p1']=$v['p1']+date('Z',$v['p1']);
+		if (isset($v['p2'])) $panchf->days_arr[$key]->se['p2']=$v['p2']+date('Z',$v['p2']);
+		if (isset($v['t1'])) $panchf->days_arr[$key]->se['t1']=$v['t1']+date('Z',$v['t1']);
+		if (isset($v['t2'])) $panchf->days_arr[$key]->se['t2']=$v['t2']+date('Z',$v['t2']);
+		if (isset($v['max_l'])) $panchf->days_arr[$key]->se['max_l']=$v['max_l']+date('Z',$v['max_l']);
+		if (isset($v['p1l'])) $panchf->days_arr[$key]->se['p1l']=$v['p1l']+date('Z',$v['p1l']);
+		if (isset($v['p2l'])) $panchf->days_arr[$key]->se['p2l']=$v['p2l']+date('Z',$v['p2l']);
+		if (isset($v['t1l'])) $panchf->days_arr[$key]->se['t1l']=$v['t1l']+date('Z',$v['t1l']);
+		if (isset($v['t2l'])) $panchf->days_arr[$key]->se['t2l']=$v['t2l']+date('Z',$v['t2l']);
+		}
+	if (isset($panchf->days_arr[$key]->me)) {
+		$v=$panchf->days_arr[$key]->me;
+		if (isset($v['max'])) $panchf->days_arr[$key]->me['max']=$v['max']+date('Z',$v['max']);
+		if (isset($v['p1'])) $panchf->days_arr[$key]->me['p1']=$v['p1']+date('Z',$v['p1']);
+		if (isset($v['p2'])) $panchf->days_arr[$key]->me['p2']=$v['p2']+date('Z',$v['p2']);
+		if (isset($v['t1'])) $panchf->days_arr[$key]->me['t1']=$v['t1']+date('Z',$v['t1']);
+		if (isset($v['t2'])) $panchf->days_arr[$key]->me['t2']=$v['t2']+date('Z',$v['t2']);
+		if (isset($v['pu1'])) $panchf->days_arr[$key]->me['pu1']=$v['pu1']+date('Z',$v['pu1']);
+		if (isset($v['pu2'])) $panchf->days_arr[$key]->me['pu2']=$v['pu2']+date('Z',$v['pu2']);
+		if (isset($v['pul'][0])) $panchf->days_arr[$key]->me['pul'][0]=$v['pul'][0]+date('Z',$v['pul'][0]);
+		if (isset($v['pul'][1])) $panchf->days_arr[$key]->me['pul'][1]=$v['pul'][1]+date('Z',$v['pul'][1]);
+		if (isset($v['pl'][0])) $panchf->days_arr[$key]->me['pl'][0]=$v['pl'][0]+date('Z',$v['pl'][0]);
+		if (isset($v['pl'][1])) $panchf->days_arr[$key]->me['pl'][1]=$v['pl'][1]+date('Z',$v['pl'][1]);
+		if (isset($v['tl'][0])) $panchf->days_arr[$key]->me['tl'][0]=$v['tl'][0]+date('Z',$v['tl'][0]);
+		if (isset($v['tl'][1])) $panchf->days_arr[$key]->me['tl'][1]=$v['tl'][1]+date('Z',$v['tl'][1]);
+		}
+	}
 	require_once(dirname(__FILE__) . '/holydays.php');
 	$holy = new holydays($panchf, $initial);
 

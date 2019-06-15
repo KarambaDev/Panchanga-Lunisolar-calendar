@@ -290,7 +290,8 @@ if ($this->test) {	print_r($swestring);	print_r($moon_rs);	}
 		for ($i=-2; $i<=3;$i++) {
 			$fix_date = $this->fix_date(0,$this->month+$i, $this->year);
 			$query = $mysql_link_tithi->query("SELECT * FROM tithi WHERE month=". $fix_date['month'] ." AND year=". $fix_date['year'] .";");
-			if ($query->num_rows<5) {	
+			if ($query->num_rows<5) {
+			// if ($query->num_rows<5 || $this->test) {	
 				$this->tithi_calc($fix_date['month'], $fix_date['year'], $mysql_link_tithi);
 				}
 			}
@@ -423,15 +424,16 @@ if ($this->test) {	print_r($swestring);	print_r($moon_rs);	}
 	public function tithi_calc ($month, $year, $mysql_link_tithi) {
 		$fday_time = gmmktime(0,0,0,$month, 1, $year);
 		$day_count = $this->day_count_foo($month, $year);
-		$jd = unixtojd($fday_time)+0.5;
+		$jd = unixtojd($fday_time);
 		$swestring = $GLOBALS["swetest"]." -p01 -bj$jd -n1 -edir".$GLOBALS["sweephe"]." -head -fl";
 		exec($swestring, $get_sm);
-if ($this->test) {	print_r($swestring);	print_r($get_sm);	}
+if ($this->test) {	print_r(['tithi_calc', '$swestring', $swestring, '$get_sm', $get_sm]);	}
 		$sunL=(float)substr($get_sm[0],1,11);
 		$moonL=(float)substr($get_sm[1],1,11);
 		$difference=$moonL-$sunL;
 		if ($moonL < $sunL) $difference += 360;
 		$ftithi=floor($difference/12);
+		if ($this->test) {	print_r(['$sunL', $sunL, '$moonL', $moonL, '$difference', $difference, '$ftithi', $ftithi]);	}
 		do	{
 			$flag = 0;
 			$aspect = 12 * $ftithi;
@@ -439,7 +441,7 @@ if ($this->test) {	print_r($swestring);	print_r($get_sm);	}
 				$get_sm = "";
 				$swestring = $GLOBALS["swetest"]." -p01 -bj$jd -n1 -edir".$GLOBALS["sweephe"]." -head -fls";
 				exec($swestring, $get_sm);
-if ($this->test) {	print_r($swestring);	print_r($get_sm);	}
+if ($this->test) {	print_r(['$swestring', $swestring, '$get_sm', $get_sm]);	}
 				$sunL=(float)substr($get_sm[0],1,11);
 				$moonL=(float)substr($get_sm[1],1,11);
 				$moonS=(float)substr($get_sm[1],13,11);
@@ -477,9 +479,12 @@ if ($this->test) {	print_r($swestring);	print_r($get_sm);	}
 			if ($month == $r_month) {
 				if ($paksha==0 AND $ntithi==15) {	$cntithi = 0;	}
 				else {	$cntithi = $ntithi;	}
-				$mysql_link_tithi->query("INSERT INTO tithi VALUES ($unix_date, $paksha, $cntithi, $r_month, ". gmdate('Y', $unix_date).", NULL, NULL, NULL, NULL, NULL);");
+				$query_string = "INSERT INTO tithi VALUES ($unix_date, $paksha, $cntithi, $r_month, ". gmdate('Y', $unix_date).", NULL, NULL, NULL, NULL, NULL);";
+				if ($this->test) {	print_r($query_string);	}
+				$mysql_link_tithi->query($query_string);
 				}
 			$calc_fin = $fday_time + ($day_count - 1)* 86400;	// время начала месяца + 1месяц
+			if ($this->test) {	print_r(['$unix_date', $unix_date, '$calc_fin', $calc_fin, '$fday_time', $fday_time, '$day_count', $day_count]);	}
 			} while ($unix_date < $calc_fin);
 		}
 

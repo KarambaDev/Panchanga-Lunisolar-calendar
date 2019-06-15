@@ -1,17 +1,19 @@
 <?php  
-$swetest = "/srv/html/5anga/panch/swetest";
-$sweephe = "/srv/html/5anga/panch/ephe";
-$swecache = "/srv/html/5anga/cache/";
+$swetest = "/usr/share/nginx/html/Panchanga-Lunisolar-calendar/panch/swetest";
+$sweephe = "/usr/share/nginx/html/Panchanga-Lunisolar-calendar/panch/ephe";
+$swecache = "/usr/share/nginx/html/Panchanga-Lunisolar-calendar/cache/";
 
 $mysql_server = 'localhost';
-$mysql_user = 'user';
-$mysql_password = 'password';
+$mysql_user = '5anga';
+$mysql_password = '60606060';
 
 $dbname = '5anga';
 //$dbname = 'panch_db';
 //$tablename = 'tithi';
 
 $e_log_file = './happend.log';
-//$ifcache = false;
+// $ifcache = false;
 $ifcache = true;
+// $test = true;
+$test = false;
 ?>
