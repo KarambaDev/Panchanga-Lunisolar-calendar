@@ -4,8 +4,8 @@ $sweephe = "/usr/share/nginx/html/Panchanga-Lunisolar-calendar/panch/ephe";
 $swecache = "/usr/share/nginx/html/Panchanga-Lunisolar-calendar/cache/";
 
 $mysql_server = 'localhost';
-$mysql_user = '5anga';
-$mysql_password = '60606060';
+$mysql_user = 'user';
+$mysql_password = 'password';
 
 $dbname = '5anga';
 //$dbname = 'panch_db';
